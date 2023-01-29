@@ -1,10 +1,9 @@
 package wolpacket
 
 import (
-	"net"
-	"log"
-	"encoding/binary"
 	"bytes"
+	"encoding/binary"
+	"net"
 )
 
 type MACAddress [6]byte
@@ -14,21 +13,23 @@ type WOLPacket struct {
 	payload [16]MACAddress
 }
 
-func NewMACAddress(mac string) MACAddress {
+func NewMACAddress(mac string) (MACAddress, error) {
 	destinationAddr, err := net.ParseMAC(mac)
 	if err != nil {
-		log.Fatal("Argument", mac, "is not a mac address!", err)
+		return MACAddress{}, err
 	}
-	log.Printf("Mac address: %v", destinationAddr)
 	var macAddr MACAddress
 	for i := range macAddr {
 		macAddr[i] = destinationAddr[i]
 	}
-	return macAddr
+	return macAddr, nil
 }
 
-func NewWOLPacket(mac string) WOLPacket {
-	macAddr := NewMACAddress(mac)
+func NewWOLPacket(mac string) (WOLPacket, error) {
+	macAddr, err := NewMACAddress(mac)
+	if err != nil {
+		return WOLPacket{}, err
+	}
 	var wolPacket WOLPacket
 	for i := range wolPacket.header {
 		wolPacket.header[i] = 0xFF
@@ -36,14 +37,13 @@ func NewWOLPacket(mac string) WOLPacket {
 	for i := range wolPacket.payload {
 		wolPacket.payload[i] = macAddr
 	}
-	return wolPacket
+	return wolPacket, nil
 }
 
-func (wp *WOLPacket) Marshal() []byte {
+func (wp *WOLPacket) Marshal() ([]byte, error) {
 	var buf bytes.Buffer
 	if err := binary.Write(&buf, binary.BigEndian, wp); err != nil {
-		log.Fatal("Error during marshaling! ", err)
+		return nil, err
 	}
-	log.Printf("Buffer: %v", buf.Bytes())
-	return buf.Bytes()
+	return buf.Bytes(), nil
 }
