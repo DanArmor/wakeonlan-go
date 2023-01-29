@@ -21,6 +21,16 @@ type WOLRunner struct {
 	destinationUDP *net.UDPAddr
 }
 
+// LocalUDP is getter for local UDP address of WoL runner
+func (wolr *WOLRunner) LocalUDP() *net.UDPAddr{
+	return wolr.localUDP
+}
+
+// DestinationUDP is getter for destination UDP address of WoL runner
+func (wolr *WOLRunner) DestinationUDP() *net.UDPAddr{
+	return wolr.destinationUDP
+}
+
 // NewWOLRunner creating WOLRunner out of local and destination address strings
 func NewWOLRunner(localAddr string, destinationAddr string) (WOLRunner, error) {
 	if localAddr == "" {

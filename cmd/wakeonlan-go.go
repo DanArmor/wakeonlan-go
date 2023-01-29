@@ -13,9 +13,6 @@ func main() {
 	localFlag := flag.String("l", "", "Local address (with port)")
 	destinationFlag := flag.String("d", "", "Destination address (with port)")
 	flag.Parse()
-	log.Printf("mac: %s", *macFlag)
-	log.Printf("local: %s", *localFlag)
-	log.Printf("destination: %s", *destinationFlag)
 	if *macFlag == "" {
 		log.Fatal("Please, provide MAC address with -m flag!")
 	}
@@ -26,4 +23,5 @@ func main() {
 	if err := wolr.WakeMAC(*macFlag); err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("WoL packet was send to %s successfully. Local: %s, Dest: %s", *macFlag, wolr.LocalUDP().String(), wolr.DestinationUDP().String())
 }
