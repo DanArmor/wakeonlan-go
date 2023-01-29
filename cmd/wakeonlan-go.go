@@ -2,23 +2,28 @@
 package main
 
 import (
-	"github.com/DanArmor/wakeonlan-go/pkg/wolrunner"
+	"flag"
 	"log"
-	"os"
+
+	"github.com/DanArmor/wakeonlan-go/pkg/wolrunner"
 )
 
 func main() {
-	argsWithoutProg := os.Args[1:]
-	if len(argsWithoutProg) == 0 {
-		log.Fatal("Not enough args!")
-	} else if len(argsWithoutProg) > 1 {
-		log.Fatal("Too many args!")
+	macFlag := flag.String("m", "", "MAC address (48 bit)")
+	localFlag := flag.String("l", "", "Local address (with port)")
+	destinationFlag := flag.String("d", "", "Destination address (with port)")
+	flag.Parse()
+	log.Printf("mac: %s", *macFlag)
+	log.Printf("local: %s", *localFlag)
+	log.Printf("destination: %s", *destinationFlag)
+	if *macFlag == "" {
+		log.Fatal("Please, provide MAC address with -m flag!")
 	}
-	wolr, err := wolrunner.NewWOLRunner("", "")
+	wolr, err := wolrunner.NewWOLRunner(*localFlag, *destinationFlag)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := wolr.WakeMAC(argsWithoutProg[0]); err != nil {
+	if err := wolr.WakeMAC(*macFlag); err != nil {
 		log.Fatal(err)
 	}
 }
