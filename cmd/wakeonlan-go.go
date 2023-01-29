@@ -14,6 +14,6 @@ func main() {
 	} else if len(argsWithoutProg) > 1 {
 		log.Fatal("Too many args!")
 	}
-	wolr := &wolrunner.WOLRuner{}
+	wolr := &wolrunner.WOLRunner{}
 	wolr.WakeMAC(argsWithoutProg[0])
 }

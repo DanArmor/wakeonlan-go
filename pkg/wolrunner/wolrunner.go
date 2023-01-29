@@ -6,16 +6,20 @@ import (
 	"net"
 )
 
-type WOLRuner struct {
+type WOLRunner struct {
 	localAddr net.Addr
 }
 
-func (wolr *WOLRuner) WakeMAC(mac string) {
+func NewWOLRunner() WOLRunner{
+	return WOLRunner{}
+}
+
+func (wolr *WOLRunner) WakeMAC(mac string) {
 	packet := wolpacket.NewWOLPacket(mac)
 	wolr.wakeMAC(packet)
 }
 
-func (wolr *WOLRuner) wakeMAC(packet wolpacket.WOLPacket) {
+func (wolr *WOLRunner) wakeMAC(packet wolpacket.WOLPacket) {
 	LocalAddr, err := net.ResolveUDPAddr("udp", wolr.getLocalAddress().String()+":20")
 	if err != nil {
 		log.Fatal(err)
@@ -33,7 +37,7 @@ func (wolr *WOLRuner) wakeMAC(packet wolpacket.WOLPacket) {
 	log.Printf("Transfered %d bytes", n)
 }
 
-func (wolr *WOLRuner) getLocalAddress() net.IP {
+func (wolr *WOLRunner) getLocalAddress() net.IP {
 	conn, err := net.Dial("udp", "8.8.8.8:53")
 	if err != nil {
 		log.Fatal(err)
