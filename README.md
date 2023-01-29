@@ -9,11 +9,17 @@
 WoL tool
 
 #### Usage 
-```wakeonlan-go <mac-address>```
+```wakeonlan-go -m <mac-address>``` - default usage, should work fine in most cases
+
+```wakeonlan-go -m <mac-address> -d 255.255.255.255:9``` - when you need to specify destination
+
+```wakeonlan-go -m <mac-address> -l 192.168.10.100:9``` - when you need to specify your networking interface, from which you're sending WoL packet.
+
+On Windows you can get list of your networking interfaces and their addresses with `ipconfig`
+
+On Linux you can do it with `ip address show`
 
 #### To be done
 *   Aliases 
 *   Flags
-    -   Local address
-    -   Destination IPv4 address
-    -   Port
+    -   Port as separate flag
