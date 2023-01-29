@@ -1,3 +1,5 @@
+// Package wolpacket provides functionality for creating
+// MAC address struct out of string and WoL Magic Packet out of string
 package wolpacket
 
 import (
@@ -6,13 +8,16 @@ import (
 	"net"
 )
 
+// MACAddress provides MAC as array of bytes
 type MACAddress [6]byte
 
+// WOLPacket representing Magic WoL Packet
 type WOLPacket struct {
-	header  [6]byte
-	payload [16]MACAddress
+	header  [6]byte        // Synchronization bytes 0xFF 6 times
+	payload [16]MACAddress // Payload of Magic Packet - MAC repeated 16 times
 }
 
+// NewMACAddress creating MACAddress out of string
 func NewMACAddress(mac string) (MACAddress, error) {
 	destinationAddr, err := net.ParseMAC(mac)
 	if err != nil {
@@ -25,6 +30,7 @@ func NewMACAddress(mac string) (MACAddress, error) {
 	return macAddr, nil
 }
 
+// NewWOLPacket creating Magic WoL Packet out of string
 func NewWOLPacket(mac string) (WOLPacket, error) {
 	macAddr, err := NewMACAddress(mac)
 	if err != nil {
@@ -40,6 +46,7 @@ func NewWOLPacket(mac string) (WOLPacket, error) {
 	return wolPacket, nil
 }
 
+// Marshal converting Magic WoL packet into slice of bytes in BigEndian form
 func (wp *WOLPacket) Marshal() ([]byte, error) {
 	var buf bytes.Buffer
 	if err := binary.Write(&buf, binary.BigEndian, wp); err != nil {

@@ -1,11 +1,11 @@
+// The wakeonlan-go program is designed as easy WoL instrument
 package main
 
 import (
+	"github.com/DanArmor/wakeonlan-go/pkg/wolrunner"
 	"log"
 	"os"
-	"github.com/DanArmor/wakeonlan-go/pkg/wolrunner"
 )
-
 
 func main() {
 	argsWithoutProg := os.Args[1:]

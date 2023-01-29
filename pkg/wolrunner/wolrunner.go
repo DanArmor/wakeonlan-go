@@ -1,3 +1,5 @@
+// Package wolrunner provides WOLRunner struct
+// WOLRunner is used for all WoL operations
 package wolrunner
 
 import (
@@ -8,16 +10,18 @@ import (
 const (
 	broadcastIPv4     = "255.255.255.255"
 	defaultWOLPort    = ":9"
-	googleDnsIPv4     = "8.8.8.8"
-	defaultDnsUdpPort = ":53"
+	googleDNSIPv4     = "8.8.8.8"
+	defaultDNSUDPPort = ":53"
 	anyAvailablePort  = ":0"
 )
 
+// WOLRunner representing container of data which is important for WoL operations
 type WOLRunner struct {
 	localUDP       *net.UDPAddr
 	destinationUDP *net.UDPAddr
 }
 
+// NewWOLRunner creating WOLRunner out of local and destination address strings
 func NewWOLRunner(localAddr string, destinationAddr string) (WOLRunner, error) {
 	if localAddr == "" {
 		localAddrIP, err := getLocalAddress()
@@ -43,6 +47,7 @@ func NewWOLRunner(localAddr string, destinationAddr string) (WOLRunner, error) {
 	}, nil
 }
 
+// WakeMAC sending WoL packet to wake machine with specified MAC
 func (wolr *WOLRunner) WakeMAC(mac string) error {
 	packet, err := wolpacket.NewWOLPacket(mac)
 	if err != nil {
@@ -69,7 +74,7 @@ func (wolr *WOLRunner) wakeMAC(packet wolpacket.WOLPacket) error {
 }
 
 func getLocalAddress() (net.IP, error) {
-	conn, err := net.Dial("udp", googleDnsIPv4+defaultDnsUdpPort)
+	conn, err := net.Dial("udp", googleDNSIPv4+defaultDNSUDPPort)
 	if err != nil {
 		return net.IP{}, err
 	}
