@@ -9,11 +9,11 @@
 WoL tool
 
 #### Usage 
-```wakeonlan-go -m <mac-address>``` - default usage, should work fine in most cases
+```wakeonlan-go <mac-addresses>``` - default usage, should work fine in most cases
 
-```wakeonlan-go -m <mac-address> -d 255.255.255.255:9``` - when you need to specify destination
+```wakeonlan-go -d 255.255.255.255:9 <mac-addresses> ``` - when you need to specify destination
 
-```wakeonlan-go -m <mac-address> -l 192.168.10.100:9``` - when you need to specify your networking interface, from which you're sending WoL packet.
+```wakeonlan-go -l 192.168.10.100:9 <mac-addresses>``` - when you need to specify your networking interface, from which you're sending WoL packet.
 
 On Windows you can get list of your networking interfaces and their addresses with `ipconfig`
 
