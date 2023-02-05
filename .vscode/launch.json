@@ -11,7 +11,7 @@
             "mode": "debug",
             "program": "${fileDirname}",
             "console": "integratedTerminal",
-            "args": ["-m", "00:0b:e0:f0:00:ed", "-d", "192.168.10.120:9"]
+            "args": ["-d", "192.168.10.120:9", "00:0b:e0:f0:00:ee"]
 
         }
     ]
