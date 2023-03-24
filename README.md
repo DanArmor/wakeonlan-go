@@ -34,4 +34,5 @@ On Linux you can do it with `ip address show`
 
 ![image](https://user-images.githubusercontent.com/39347109/227588943-6cf841a5-0232-4751-b33d-4681ec51c96a.png)
 
+![image](https://user-images.githubusercontent.com/39347109/227590749-fb688d08-65fc-4150-9efd-68bee548952f.png)
 
