@@ -9,17 +9,29 @@
 WoL tool
 
 #### Usage 
-```wakeonlan-go <mac-addresses>``` - default usage, should work fine in most cases
+```wakeonlan-go [OPTIONS] MACs...``` - where ```MACs``` can be addresses or aliases
 
-```wakeonlan-go -d 255.255.255.255:9 <mac-addresses> ``` - when you need to specify destination
+  `-d=`         Destination address(port is optional)
+  
+  `-l=`         Local address of network interface (port is optional)
+  
+  `-r=`         If used - action is not performed, but is recorded as alias to given name. If you use alias inside other alias - it will be deep copy,
+              so you can delete used alias in the future.
+              
+  `-s`          Show list of aliases
+  
+      `--rm=`   Remove alias with a given name
 
-```wakeonlan-go -l 192.168.10.100:9 <mac-addresses>``` - when you need to specify your networking interface, from which you're sending WoL packet.
-
-On Windows you can get list of your networking interfaces and their addresses with `ipconfig`
+On Windows you can get list of your networking interfaces and their addresses with `ipconfig` to use with `-l`/`-d` flags.
 
 On Linux you can do it with `ip address show`
 
-#### To be done
-*   Aliases 
-*   Flags
-    -   Port as separate flag
+#### Screenshots
+
+![image](https://user-images.githubusercontent.com/39347109/227588346-c22f7a40-dcb1-4ceb-8147-72dd6b737d93.png)
+
+![image](https://user-images.githubusercontent.com/39347109/227588667-460df642-2320-4f15-a55c-210d1efd9b0c.png)
+
+![image](https://user-images.githubusercontent.com/39347109/227588943-6cf841a5-0232-4751-b33d-4681ec51c96a.png)
+
+
