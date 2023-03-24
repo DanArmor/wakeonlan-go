@@ -197,9 +197,9 @@ func main() {
 				} else {
 					fmt.Printf("#%d WoL packet was send to %s successfully. Local: %s, Dest: %s\n", count, addrs[index].Macs[i], wolr.LocalUDP().String(), wolr.DestinationUDP().String())
 				}
+				count++
 			}
 			index++
-			count++
 		}
 	}
 }
