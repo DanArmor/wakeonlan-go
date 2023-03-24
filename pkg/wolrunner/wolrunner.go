@@ -3,8 +3,10 @@
 package wolrunner
 
 import (
-	"github.com/DanArmor/wakeonlan-go/pkg/wolpacket"
 	"net"
+	"strings"
+
+	"github.com/DanArmor/wakeonlan-go/pkg/wolpacket"
 )
 
 const (
@@ -22,12 +24,12 @@ type WOLRunner struct {
 }
 
 // LocalUDP is getter for local UDP address of WoL runner
-func (wolr *WOLRunner) LocalUDP() *net.UDPAddr{
+func (wolr *WOLRunner) LocalUDP() *net.UDPAddr {
 	return wolr.localUDP
 }
 
 // DestinationUDP is getter for destination UDP address of WoL runner
-func (wolr *WOLRunner) DestinationUDP() *net.UDPAddr{
+func (wolr *WOLRunner) DestinationUDP() *net.UDPAddr {
 	return wolr.destinationUDP
 }
 
@@ -40,12 +42,18 @@ func NewWOLRunner(localAddr string, destinationAddr string) (WOLRunner, error) {
 		}
 		localAddr = localAddrIP.String() + anyAvailablePort
 	}
+	if !strings.Contains(localAddr, ":") {
+		localAddr += anyAvailablePort
+	}
 	localUDP, err := net.ResolveUDPAddr("udp", localAddr)
 	if err != nil {
 		return WOLRunner{}, err
 	}
 	if destinationAddr == "" {
 		destinationAddr = broadcastIPv4 + defaultWOLPort
+	}
+	if !strings.Contains(destinationAddr, ":") {
+		destinationAddr += defaultWOLPort
 	}
 	destinationUDP, err := net.ResolveUDPAddr("udp", destinationAddr)
 	if err != nil {
