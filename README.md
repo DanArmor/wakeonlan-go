@@ -20,7 +20,7 @@ WoL tool
               
   `-s`          Show list of aliases
   
-      `--rm=`   Remove alias with a given name
+  `--rm=`   Remove alias with a given name
 
 On Windows you can get list of your networking interfaces and their addresses with `ipconfig` to use with `-l`/`-d` flags.
 
